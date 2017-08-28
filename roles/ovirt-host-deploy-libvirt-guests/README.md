@@ -19,7 +19,7 @@ Role Variables
 |-------------------------------|----------------|-------------------------------------------------------------------|
 | host_deploy_cluster_version   | 4.2            | The version of the cluster where the host resides. Based on this version the role will enable cluster version specific firewalld rules. |
 | host_deploy_shutdown_timeout  | 600            | Timeout before systemd starts killing processes     |
-| host_deploy_shutdown_parallel | false          | If true VMs are shutdown in parallel |
+| host_deploy_shutdown_parallel | 0              | If set VMs are shutdown in parallel with count set |
 
 Dependencies
 ------------
@@ -36,7 +36,7 @@ Example Playbook
   vars:
     host_deploy_cluster_version: 4.2
     host_deploy_shutdown_timeout: 9001
-    host_deploy_shutdown_parallel: false
+    host_deploy_shutdown_parallel: 0
 
   roles:
     - ovirt-host-deploy-firewalld
