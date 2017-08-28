@@ -9,3 +9,29 @@
     msg: "VDSM version {{ vdsm_version.stdout }} is not supported for libvirt guests."
   when:
     - "vdsm_version.stdout | version_compare('4.20', '<')"
+
+- block:
+    - name: Change default timeout if setup
+      lineinfile:
+        path: /etc/sysconfig/libvirt-guests
+        regexp: "^SHUTDOWN_TIMEOUT="
+        line: "SHUTDOWN_TIMEOUT={{ host_deploy_shutdown_timeout }}"
+      when:
+        - host_deploy_shutdown_timeout
+
+    - name: Change run in parallel if setup
+      lineinfile:
+        path: /etc/sysconfig/libvirt-guests
+        regexp: "^#PARALLEL_SHUTDOWN="
+        line: "PARALLEL_SHUTDOWN={{ host_deploy_shutdown_parallel }}"
+      when:
+        - host_deploy_shutdown_parallel
+
+    - name: Stop libvirt-guests service if running
+      service:
+        name: libvirt-guests
+        state: started
+        enabled: yes
+
+  when:
+    - "vdsm_version | version_compare('4.20', '>=')"
