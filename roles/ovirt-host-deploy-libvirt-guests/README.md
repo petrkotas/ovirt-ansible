@@ -29,7 +29,7 @@ Example Playbook
 ----------------
 
 ```yaml
-- name: oVirt host deploy - firewalld
+- name: oVirt host deploy - libvirt-guests
   hosts: hostname
 
   vars:
@@ -37,7 +37,7 @@ Example Playbook
     host_deploy_shutdown_parallel: 0
 
   roles:
-    - ovirt-host-deploy-firewalld
+    - ovirt-host-deploy-libvirt-guests
 ```
 
 License
