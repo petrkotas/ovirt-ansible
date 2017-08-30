@@ -4,12 +4,6 @@
   changed_when: false
   register: vdsm_version
 
-- name: Check if VDSM version is supported for FirewallD
-  fail:
-    msg: "VDSM version {{ vdsm_version.stdout }} is not supported for libvirt guests."
-  when:
-    - "vdsm_version.stdout | version_compare('4.20', '<')"
-
 - block:
     - name: Change default timeout if setup
       lineinfile:
@@ -17,7 +11,7 @@
         regexp: "^SHUTDOWN_TIMEOUT="
         line: "SHUTDOWN_TIMEOUT={{ host_deploy_shutdown_timeout }}"
       when:
-        - host_deploy_shutdown_timeout
+        - host_deploy_shutdown_timeout is defined
 
     - name: Change run in parallel if setup
       lineinfile:
@@ -25,7 +19,7 @@
         regexp: "^#PARALLEL_SHUTDOWN="
         line: "PARALLEL_SHUTDOWN={{ host_deploy_shutdown_parallel }}"
       when:
-        - host_deploy_shutdown_parallel
+        - host_deploy_shutdown_parallel is defined
 
     - name: Stop libvirt-guests service if running
       service:
