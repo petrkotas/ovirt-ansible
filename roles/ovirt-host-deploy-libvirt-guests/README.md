@@ -5,7 +5,7 @@ This role is used for configuration of libvirt-guests on oVirt hypervisor.
 To make the libvirt-guests play nicely with the VDSM, these options are set:
  - the on-boot event is disabled
  - the on-shutdown event is set to shutdown, instead of hibernate
- - the default timeout is risen to 600 seconds and can be configured
+ - the default timeout is raised to 600 seconds and can be configured
 
 Requirements
 ------------
