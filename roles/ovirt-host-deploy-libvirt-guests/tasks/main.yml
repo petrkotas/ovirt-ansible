@@ -6,25 +6,29 @@
 
 - block:
     - name: Change default timeout if setup
-      lineinfile:
+      ini_file:
+        state: present
+        section: null
         path: /etc/sysconfig/libvirt-guests
-        regexp: "^SHUTDOWN_TIMEOUT="
-        line: "SHUTDOWN_TIMEOUT={{ host_deploy_shutdown_timeout }}"
+        option: "SHUTDOWN_TIMEOUT"
+        value: "{{ host_deploy_shutdown_timeout }}"
       when:
         - host_deploy_shutdown_timeout is defined
 
     - name: Change run in parallel if setup
-      lineinfile:
+      ini_file:
+        state: present
+        section: null
         path: /etc/sysconfig/libvirt-guests
-        regexp: "^#PARALLEL_SHUTDOWN="
-        line: "PARALLEL_SHUTDOWN={{ host_deploy_shutdown_parallel }}"
+        option: "PARALLEL_SHUTDOWN "
+        value: "{{ host_deploy_shutdown_parallel }}"
       when:
         - host_deploy_shutdown_parallel is defined
 
-    - name: Stop libvirt-guests service if running
+    - name: Start libvirt-guests service
       service:
         name: libvirt-guests
-        state: started
+        state: restarted
         enabled: yes
 
   when:
