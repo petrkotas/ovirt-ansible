@@ -15,10 +15,10 @@ Requirements
 Role Variables
 --------------
 
-| Name                          | Default value  | Description                                                       |
-|-------------------------------|----------------|-------------------------------------------------------------------|
-| host_deploy_shutdown_timeout  | 600            | Timeout before systemd starts killing processes                   |
-| host_deploy_shutdown_parallel | 0              | If set VMs are shutdown in parallel with count set                |
+| Name                          |  Description                                       |
+|-------------------------------|----------------------------------------------------|
+| host_deploy_shutdown_timeout  | Timeout before systemd starts killing processes    |
+| host_deploy_shutdown_parallel | If set VMs are shutdown in parallel with count set |
 
 Dependencies
 ------------
