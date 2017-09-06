@@ -20,7 +20,7 @@
       when:
         - host_deploy_shutdown_parallel is defined
 
-    - name: Start libvirt-guests service
+    - name: Start libvirt-guests service and ensure its enabled
       service:
         name: libvirt-guests
         state: restarted
