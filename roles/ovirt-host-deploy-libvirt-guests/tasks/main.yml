@@ -1,29 +1,15 @@
 ---
 - block:
-    - name: Change default timeout if setup
-      ini_file:
-        state: present
-        section: null
-        path: /etc/sysconfig/libvirt-guests
-        option: "SHUTDOWN_TIMEOUT"
-        value: "{{ host_deploy_shutdown_timeout }}"
-      when:
-        - host_deploy_shutdown_timeout is defined
-
-    - name: Change run in parallel if setup
-      ini_file:
-        state: present
-        section: null
-        path: /etc/sysconfig/libvirt-guests
-        option: "PARALLEL_SHUTDOWN "
-        value: "{{ host_deploy_shutdown_parallel }}"
-      when:
-        - host_deploy_shutdown_parallel is defined
+    - name: Setup the configuration file
+      template:
+        src: libvirt-guests.j2
+        dest: /etc/sysconfig/libvirt-guests
+        backup: yes
 
     - name: Start libvirt-guests service and ensure its enabled
       service:
         name: libvirt-guests
-        state: restarted
+        state: started
         enabled: yes
 
   when:
